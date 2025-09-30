@@ -1,13 +1,26 @@
 import io
+from enum import Enum
 import matplotlib.pyplot as plt
 from PIL import Image
+
+class PlotAlgorithm(Enum):
+    RNZL = 1,
+    RNZI = 2,
+    BAMI = 3,
+    PTER = 4,
+    MAN = 5,
+    CD = 6
 
 class Plotter:
     def __init__(self):
         pass
 
     def __get_plot_buffer(self, x,y,title, x_ticks):
-        fig, ax = plt.subplots()
+        p_width = 300
+        p_height = 180
+        dpi = 100
+
+        fig, ax = plt.subplots(figsize=(p_width/dpi, p_height/dpi), dpi=dpi)
 
         ax.plot(x,y)
 
@@ -133,7 +146,7 @@ class Plotter:
         x.append(len(a))
         y.append(last_state)
 
-        return self.__get_plot_buffer(x, y, "bipolar AMI", len(a))
+        return self.__get_plot_buffer(x, y, "pter", len(a))
 
     def get_man_plot_buffer(self, a):
         x = []
@@ -181,12 +194,22 @@ class Plotter:
         
         return self.__get_plot_buffer(x, y, "CD", len(a))
         
+    def get_plot(self, a, algorithm : PlotAlgorithm):
+        if algorithm == PlotAlgorithm.RNZL: return self.get_rnzl_plot_buffer(a)
+        if algorithm == PlotAlgorithm.RNZI: return self.get_rnzi_plot_buffer(a)
+        if algorithm == PlotAlgorithm.BAMI: return self.get_b_ami_plot_buffer(a)
+        if algorithm == PlotAlgorithm.PTER: return self.get_p_ter_plot_buffer(a)
+        if algorithm == PlotAlgorithm.MAN: return self.get_man_plot_buffer(a)
+        if algorithm == PlotAlgorithm.CD: return self.get_cd_plot_buffer(a)
+
 def main():
-    a = [0,1,0,0,1,1,0,0,0,1,1]
-    
+    # a = [0,1,0,0,1,1,0,0,0,1,1]
+    a = [0, 1, 1, 0]
+
     plotter = Plotter()
     
-    image = Image.open(plotter.get_man_plot_buffer(a)) 
+    image = Image.open(plotter.get_p_ter_plot_buffer(a))
+    #image = Image.open(plotter.get_man_plot_buffer(a)) 
 
     image.show()
     

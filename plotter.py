@@ -241,9 +241,9 @@ def main():
 
     plotter = Plotter()
     
-    #image = Image.open(plotter.get_p_ter_plot_buffer(a))
-    #image = Image.open(plotter.get_man_plot_buffer(a)) 
-    image = Image.open(plotter.get_cd_plot_buffer(a))
+    image = Image.open(plotter.get_p_ter_plot_buffer(a))
+    # image = Image.open(plotter.get_man_plot_buffer(a)) 
+    # image = Image.open(plotter.get_cd_plot_buffer(a))
 
     image.show()
     

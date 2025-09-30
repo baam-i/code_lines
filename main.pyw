@@ -31,8 +31,9 @@ class App(tk.Tk):
     super().__init__()
 
     # window settings
-    self.geometry("900x600")
+    self.geometry("950x570")
     self.title("code lines (by baamwiss)")
+    self.iconbitmap("GATITO.ico")
 
     # TODO: theme
 
@@ -53,7 +54,6 @@ class App(tk.Tk):
     self.main_container.pack(side="top", fill="both", expand=True, padx="10", pady="0 10")
     self.main_container.grid_rowconfigure(0, weight=1)
     self.main_container.grid_rowconfigure(1, weight=1) 
-    self.main_container.grid_rowconfigure(2, weight=1) 
     self.main_container.grid_columnconfigure(0, weight=1)
     self.main_container.grid_columnconfigure(1, weight=1)
     self.main_container.grid_columnconfigure(2, weight=1)
@@ -114,7 +114,7 @@ class App(tk.Tk):
       # self.entry_text.set(text[0:len(text) - 2])
       return
 
-    self.input = [text[i] for i in range(0, len(text))]
+    self.input = [int(text[i]) for i in range(0, len(text))]
 
     for plot in self.plots:
       print(self.input, plot.algorithm)

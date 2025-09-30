@@ -1,14 +1,22 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 def do_plot(x,y,title, x_ticks):
     
     fig, ax = plt.subplots()
+    """data = np.random.normal(60, 13, 500)
+
+    plt.hist(data, orientation = 'horizontal')
+    plt.grid()
+    plt.axis([0, 150, 0, 120])
+    plt.xticks(np.arange(0,151,25))
+    plt.show()"""
     
     ax.plot(x,y)
 
     ax.set_xticks(range(0,x_ticks,1))
     ax.set_yticks(range(-1,2,1))
-    plt.xticks(color="w")
+    plt.xticks(color="black")
     plt.title(title)
 
     ax.grid(True, linestyle="--", color="lightgray", alpha=0.7)
@@ -162,15 +170,49 @@ def MAN(a):
 def CD(a):
     x = []
     y = []
+
+    last_state = 1
+
+    x.append(-0.5)
+    y.append(last_state)
+
+    for i, valor in enumerate(a):
+        if valor == 0: # si es cero tenemobs dos transiciones en el mismo periodo :p
+            x.append(i)
+            y.append(last_state)
+            
+            last_state = not last_state # transicion del inicio
+            x.append(i)
+            y.append(last_state)
+
     
+        i += 0.5  
         
+        x.append(i)
+        y.append(last_state)
+
+        last_state = not last_state
+        x.append(i)
+        y.append(last_state)
+
+        i += 0.5  
+
+        x.append(i)
+        y.append(last_state)
+                
+    x.append(len(a))
+    y.append(last_state)
+
+    do_plot(x, y, "CD", len(a))
+            
 def main():
-    a = [0,1,0,0,1,1,0,0,0,1,1]
-    # RNZL(a)
-    # RNZI(a)
-    # B_AMI(a)
-    # P_TER(a)
-    MAN(a)
-    
+    a = [1,0,1,0,0,1,1,1,0,0,1]
+    #RNZL(a)
+    #RNZI(a)
+    #B_AMI(a)
+    #P_TER(a)
+    #MAN(a)
+    CD(a)
+
 if __name__ == "__main__":
     main()

@@ -182,10 +182,7 @@ class Plotter:
         y = []
 
         last_state = 1
-
-        x.append(-0.5)
-        y.append(last_state)
-
+        
         for i, valor in enumerate(a):
             if valor == 0: # si es cero tenemobs dos transiciones en el mismo periodo :p
                 x.append(i)
@@ -194,8 +191,10 @@ class Plotter:
                 last_state = not last_state # transicion del inicio
                 x.append(i)
                 y.append(last_state)
-
-        
+            else: 
+                x.append(i)
+                y.append(last_state)
+                        
             i += 0.5  
             
             x.append(i)
@@ -209,9 +208,6 @@ class Plotter:
 
             x.append(i)
             y.append(last_state)
-                    
-        x.append(len(a))
-        y.append(last_state)
 
         return x, y, "Diferencial"
         
@@ -230,7 +226,10 @@ def main():
     
     x, y, title = plotter.get_p_ter_plot_data(a)
 
+
     plotter.show_plot(x, y, title, len(a))
+    for i, b in enumerate(a):
+        plotter.text(i+0.5, 1.2, str(b), ha='center')
     
 if __name__ == "__main__":
     main()

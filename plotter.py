@@ -1,7 +1,6 @@
 import io
 from enum import Enum
 import matplotlib.pyplot as plt
-from PIL import Image
 
 class PlotAlgorithm(Enum):
     RNZL = 1,
@@ -15,7 +14,7 @@ class Plotter:
     def __init__(self):
         pass
 
-    def __get_plot_buffer(self, x,y,title, x_ticks):
+    def show_plot(self, x, y, title, x_ticks):
         p_width = 300
         p_height = 180
         dpi = 100
@@ -31,19 +30,9 @@ class Plotter:
         plt.xticks(color="w")
         plt.title(title)
         
-        # plt.show()
+        plt.show()
 
-        buffer = io.BytesIO()
-
-        fig.savefig(buffer, format="png")
-
-        plt.close(fig)
-
-        buffer.seek(0)
-
-        return buffer
-
-    def get_rnzl_plot_buffer(self, a):
+    def get_rnzl_plot_data(self, a):
         x = []
         y = []
 
@@ -64,9 +53,9 @@ class Plotter:
         x.append(len(a))
         y.append(last_state)
 
-        return self.__get_plot_buffer(x, y, "non-return to zero level", len(a))
+        return x, y, "NRZ-L"
 
-    def get_rnzi_plot_buffer(self, a):
+    def get_rnzi_plot_data(self, a):
         x = []
         y = []
 
@@ -87,9 +76,9 @@ class Plotter:
         x.append(len(a))
         y.append(last_state)
 
-        return self.__get_plot_buffer(x, y, "non-return to zero inverted", len(a))
+        return x, y, "NRZ-I"
 
-    def get_b_ami_plot_buffer(self, a):
+    def get_b_ami_plot_data(self, a):
         x = []
         y = []
         
@@ -117,9 +106,9 @@ class Plotter:
         x.append(len(a))
         y.append(last_state)
 
-        return self.__get_plot_buffer(x, y, "bipolar AMI", len(a))
+        return x, y, "B-AMI"
 
-    def get_p_ter_plot_buffer(self, a):
+    def get_p_ter_plot_data(self, a):
         x = []
         y = []
 
@@ -146,9 +135,9 @@ class Plotter:
         x.append(len(a))
         y.append(last_state)
 
-        return self.__get_plot_buffer(x, y, "pter", len(a))
+        return x, y, "P-TER"
 
-    def get_man_plot_buffer(self, a):
+    def get_man_plot_data(self, a):
         x = []
         y = []
 
@@ -186,9 +175,9 @@ class Plotter:
         x.append(len(a))
         y.append(last_state)
 
-        return self.__get_plot_buffer(x, y, "Miunich", len(a))
+        return x, y, "Manchester"
         
-    def get_cd_plot_buffer(self, a):
+    def get_cd_plot_data(self, a):
         x = []
         y = []
 
@@ -224,28 +213,24 @@ class Plotter:
         x.append(len(a))
         y.append(last_state)
 
-        return self.__get_plot_buffer(x, y, "CD", len(a))
+        return x, y, "Diferencial"
         
-    def get_plot(self, a, algorithm : PlotAlgorithm):
-        if algorithm == PlotAlgorithm.RNZL: return self.get_rnzl_plot_buffer(a)
-        if algorithm == PlotAlgorithm.RNZI: return self.get_rnzi_plot_buffer(a)
-        if algorithm == PlotAlgorithm.BAMI: return self.get_b_ami_plot_buffer(a)
-        if algorithm == PlotAlgorithm.PTER: return self.get_p_ter_plot_buffer(a)
-        if algorithm == PlotAlgorithm.MAN: return self.get_man_plot_buffer(a)
-        if algorithm == PlotAlgorithm.CD: return self.get_cd_plot_buffer(a)
+    def get_plot_data(self, a, algorithm : PlotAlgorithm):
+        if algorithm == PlotAlgorithm.RNZL: return self.get_rnzl_plot_data(a)
+        if algorithm == PlotAlgorithm.RNZI: return self.get_rnzi_plot_data(a)
+        if algorithm == PlotAlgorithm.BAMI: return self.get_b_ami_plot_data(a)
+        if algorithm == PlotAlgorithm.PTER: return self.get_p_ter_plot_data(a)
+        if algorithm == PlotAlgorithm.MAN: return self.get_man_plot_data(a)
+        if algorithm == PlotAlgorithm.CD: return self.get_cd_plot_data(a)
 
 def main():
-    # a = [0,1,0,0,1,1,0,0,0,1,1]
-    # a = [0, 1, 1, 0]
     a = [1,0,1,0,0,1,1,1,0,0,1]
 
     plotter = Plotter()
     
-    image = Image.open(plotter.get_p_ter_plot_buffer(a))
-    # image = Image.open(plotter.get_man_plot_buffer(a)) 
-    # image = Image.open(plotter.get_cd_plot_buffer(a))
+    x, y, title = plotter.get_p_ter_plot_data(a)
 
-    image.show()
+    plotter.show_plot(x, y, title, len(a))
     
 if __name__ == "__main__":
     main()

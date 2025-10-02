@@ -1,5 +1,7 @@
 from plotter import Plotter, PlotAlgorithm
 
+import sys
+import os
 import tkinter as tk
 from tkinter import ttk
 
@@ -42,7 +44,7 @@ class App(tk.Tk):
     
     self.geometry("950x570")
     self.title("code lines (by baamwiss)")
-    self.iconbitmap("GATITO.ico")
+    self.iconbitmap(default=self.resource_path("GATITO.ico"))
 
     # theme
     
@@ -130,6 +132,14 @@ class App(tk.Tk):
 
     for plot in self.plots:
       plot.render(self.input)
+
+  def resource_path(self, relative_path):
+    try:
+      base_path = sys._MEIPASS
+    except Exception:
+      base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 if __name__ == "__main__":
   app = App()

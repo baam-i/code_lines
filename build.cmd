@@ -1,0 +1,1 @@
+pyinstaller main.pyw --onefile --windowed --name "CodeLines" --icon="GATITO.ico" --add-data "GATITO.ico;."

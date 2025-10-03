@@ -112,7 +112,7 @@ class Plotter:
         x = []
         y = []
 
-        last_state = 1
+        last_state = 0
         polaridad = -1
         
         for i, valor in enumerate(a):
@@ -141,7 +141,7 @@ class Plotter:
         x = []
         y = []
 
-        last_state = 1
+        last_state = 0
 
         x.append(-0)
         y.append(last_state)
@@ -181,7 +181,7 @@ class Plotter:
         x = []
         y = []
 
-        last_state = 1
+        last_state = 0
         
         for i, valor in enumerate(a):
             if valor == 0: # si es cero tenemobs dos transiciones en el mismo periodo :p
@@ -228,8 +228,6 @@ def main():
 
 
     plotter.show_plot(x, y, title, len(a))
-    for i, b in enumerate(a):
-        plotter.text(i+0.5, 1.2, str(b), ha='center')
-    
+        
 if __name__ == "__main__":
     main()

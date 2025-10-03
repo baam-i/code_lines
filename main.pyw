@@ -30,7 +30,11 @@ class PlotFrame(ttk.Frame):
     self.ax.set_xticks(range(0, len(a), 1))
     self.ax.set_yticks(range(-1, 2, 1))
     self.ax.tick_params(axis="x", labelcolor="w")
-    self.ax.grid(True, linestyle="--", color="lightgray", alpha=0.7)
+    self.ax.grid(True, linestyle="--", color="gray", alpha=0.7)
+
+    for i, b in enumerate(a):
+      self.ax.text(i+0.5,0.8, str(b), ha='center')
+
     self.ax.set_title(title)
     self.ax.relim()
     self.ax.autoscale_view()
